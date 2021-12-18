@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuessTheNumber</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+</head>
+<body>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
+
+
+    body{
+        margin: 0; /* just debugging*/
+        padding-top: 3rem;
+
+        height: 100vh;
+        background-color: #170e3f;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        font-family: 'Roboto Condensed', sans-serif;
+
+        box-sizing: border-box;
+    }
+
+
+    h1{
+        font-size: 2rem;
+        color: #00C9A2;
+        text-shadow: 5px 5px 10px rgba(79, 158, 0, 0.405);
+    }
+
+    section{
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        position: relative;
+
+        padding: 1rem;
+    }
+
+    .mianTitle{
+        text-align: center;
+    }
+
+    .configNov{
+        transition: all .4s;
+        appearance: none;
+        /* height: 0; */
+        overflow: hidden;
+        opacity: 0;
+        position: absolute;
+
+
+        background-color: #aea69e;
+        display: flex;
+        justify-content: space-evenly;
+
+        flex-direction: column;
+        padding: 0rem 1rem;
+
+        border-radius: 1rem;
+        /* color: #170e3f !important; */
+    }
+
+    .JS-addHeight{
+        /* height: auto; */
+
+        padding: 1rem 1rem;
+        inset: 0;
+
+        opacity: 1;
+        z-index: 200;
+
+    }
+
+    .configNov h1{
+        margin: 0;
+        margin-bottom: 1rem;
+        align-self: center;
+        color: #170e3f !important;
+        text-shadow: none !important;
+    }
+
+    .value-container{
+        display: flex;
+        flex-direction: column;
+        color: #000000;
+        font-weight: 900;
+    }
+
+    .value-container input{
+        padding: .3rem;
+        background: #FEFEDF;
+        border-radius: 1rem;
+    }
+
+    .btn-wrapper{
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .configNov button{
+        padding: 1rem;
+        width: 100%;
+        border-radius: 1rem;
+        background-color: #FF8066;
+        cursor: pointer;
+    }
+
+    .btn-applay{
+        background-color: #00C9A7 !important;
+    }
+
+    .wrapper{
+        /* filter: blur(7px); */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #theNum span{
+        /* outline: 2px solid red; */
+        position: relative;
+        z-index: 100;
+    }
+
+    #theNum{
+        /* background-position: left; */
+        width: 100px;
+        /* outline: 2px solid red; */
+        padding: 1rem;
+        background-color: rgb(198, 252, 145);
+
+        font-size: 1.2rem;
+        color: black;
+        text-align: center;
+        border-radius: 10rem;
+
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    
+
+
+    #theNum::before{
+        content: '';
+        position: absolute;
+        background-color: rgb(245, 210, 158);
+        
+        inset: 0;
+        z-index: -100;
+
+        transform: translateX(-100%);
+        transition: all .5s ease-in-out;
+
+    }
+
+    #showTheNum{
+        margin-top: 30px;
+    }
+
+    .theNumAdd::before{
+        transform: translateX(0%) !important;
+    }
+
+    #inputVal{
+        /* height: px; */
+        width: 100px;
+
+
+        padding: 1rem;
+        border-radius: 10rem;
+        color: #c6fc91;
+
+        font-size: 1.2rem;
+        background-color: #3f6157;
+        text-align: center;
+        border: none;
+    }
+
+    .puraKopal{
+        position: relative;
+        transition: all .7s ease-in-out;
+    }
+
+    .puraKopal::after{
+        transition: inherit;
+        content: '';
+        position: absolute;
+
+        background-color: #00C9A2;
+
+        padding: 20px 8rem;
+        border-radius: 10rem;
+        left: 50%;
+        transform: translate(-50%, 50%);
+
+        z-index: -100;  
+        opacity: 0;
+    }
+
+    .puraKopal::before{
+        transition: inherit;
+
+        --border: 10px;
+        position: absolute;
+
+        content: '';
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%, 100%);
+        
+        border: var(--border) solid #00C9A2;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-top-color: transparent;
+
+        opacity: 0;
+    }
+
+    .JS-opacity::before{
+        opacity: 1;
+    }
+
+    .JS-opacity::after{
+        opacity: 1;
+    }
+    
+    
+
+    #inputVal::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #c6fc91;
+        opacity: 1; /* Firefox */
+        font-family: 'Roboto Condensed', sans-serif;
+        text-align: center;
+    }
+
+    #inputVal:focus{
+        outline: 2px solid #00C9A2;
+    }
+
+    .boldADF{
+        color: #170e3f;
+        font-weight: 900;
+    }
+
+    .btn-playAgain{
+        height: 0;
+        padding: 0rem 1.2rem;
+        opacity: 0;
+
+        background-color: #00C9A2;
+        color: #170e3f;
+
+        overflow: hidden;
+        font-size: 1.2rem;
+        font-weight: 600;
+        
+        transition: all .4s ease;
+
+
+        border: 0;
+        border-radius: 10rem;
+
+        margin: 10px;
+    }
+
+    .btn-playAgain:focus{
+        outline: 2px solid rgb(245, 210, 158) !important; 
+        
+    }
+
+    #btn-config{
+        color: grey;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .btn-add{
+        height: auto;
+        padding: 1rem 1.2rem;
+        opacity: 1;
+        transition-delay: 1s;
+    }
+
+    
+
+    input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+
+<section>
+
+    <div id="configNov" class="configNov ">
+        <h1 class="mianTitle">Type the Range</h1>
+       <div class="value-container"> <span> Max Value:</span> <input type="number" id="MaXVal"></div>
+       <div class="value-container"> <span>Min Value:</span> <input type="number" id="MinVal"></div>
+    
+       <p id="info" style="color: black; text-align:center;">Enter positive Numbers Max Greater then Min</p>
+
+<div class="btn-wrapper">
+
+           <button id="btn-applay" class="btn-applay">
+            Apply
+        </button> 
+    
+        <button id="btn-cancel" class="btn-cancel">
+            Cancel
+        </button> 
+
+</div>  
+    </div>
+
+<div class="wrapper">   
+        <h1 class="mianTitle">Guess The Number </h1>
+        
+        <p id="theNum">
+            <span id="theNumber">??</span>
+        </p>
+        
+       <span id="borderBack" class="puraKopal"> <input id="inputVal" type="number" value="" placeholder="Guess here"><br></span>
+        <p id="showTheNum"></p>
+        
+        <i id="btn-config" class="fas fa-sliders-h "></i>
+
+        <button class="btn-playAgain" id="playAgainButton">
+            play again
+        </button>
+    
+</div>   
+</section>  
+
+
+<script>
+    let show = document.getElementById('showTheNum');
+    let inputVal ="";
+   
+    let max = ""; 
+    let min = "";
+    let minmaxCount = 0;
+
+    if(minmaxCount == 0){
+        max = 100;
+        min = 1;
+        minmaxCount= 1;
+    }
+
+    let showTXT=`Type a Number from ${min} to ${max}`
+    show.innerHTML= showTXT;
+   
+    let therndNum = theRndNum();
+    
+    
+
+    //value input
+    let tempMax = '';
+    let tempMin = '';
+
+    document.getElementById('MaXVal').addEventListener('change', function(){
+        tempMax = Number(document.getElementById('MaXVal').value)
+        // console.log("temp max " + tempMax)
+    })
+
+    document.getElementById('MinVal').addEventListener('change', function(){
+        tempMin = Number(document.getElementById('MinVal').value)
+        // console.log("temp min " + tempMin)
+
+    })
+
+    
+
+
+    document.getElementById("inputVal").addEventListener("change", inputValF)
+    document.getElementById("playAgainButton").addEventListener('click', playAgain);
+
+    
+    function theRndNum(){ //!random number generator
+        let data = 
+        Math.floor((Math.random() * (max - min + 1)) + min);
+        return data;
+    }
+
+    function inputValF(){
+        inputVal = document.getElementById("inputVal").value;
+        test();
+    }
+
+
+
+
+
+let coutn = 0;
+
+    function test(){ //!number checker
+        let diffr = max - min;
+
+        let close = diffr / 20;
+        let mid = diffr / 10;
+        let high = diffr / 6.67;
+  
+        if(inputVal >= max + 1 || inputVal < min -1){
+            show.innerHTML=`I said it was from ${min} to ${max} -_-`         
+        }
+        
+
+        else if(inputVal == therndNum){
+
+            show.innerHTML= "Bingo u got it!!"
+            document.getElementById("theNum").classList.add('theNumAdd');
+            document.getElementById("theNum").innerHTML= therndNum;
+            document.getElementById("playAgainButton").classList.add( "btn-add");
+             
+            coutn = 1;
+  
+        }
+
+        else if(inputVal  <= (therndNum + close) && inputVal >= therndNum || (inputVal  <= therndNum && inputVal  >= (therndNum - close))){
+            show.innerHTML= "almost there !!"         
+        }
+        
+        else if(inputVal  <= (therndNum + mid) && inputVal >= (therndNum + close) || inputVal  <= (therndNum - close) && inputVal  >= (therndNum - mid)) {
+            show.innerHTML= "keep going"         
+        }
+        
+        else if(inputVal  <= (therndNum + high) && inputVal  >= (therndNum + mid) || inputVal  <= (therndNum - mid) && inputVal  >= (therndNum - high)) {
+            show.innerHTML= "u are in a right way"         
+        }
+
+        // else if(inputVal  <= (therndNum + 5) && inputVal >= therndNum || (inputVal  <= therndNum && inputVal  >= (therndNum - 5))){
+        //     show.innerHTML= "almost there !!"         
+        // }
+        
+        // else if(inputVal  <= (therndNum + 10) && inputVal >= (therndNum + 5) || inputVal  <= (therndNum - 5) && inputVal  >= (therndNum - 10)) {
+        //     show.innerHTML= "keep going"         
+        // }
+        
+        // else if(inputVal  <= (therndNum + 15) && inputVal  >= (therndNum + 10) || inputVal  <= (therndNum - 10) && inputVal  >= (therndNum - 15)) {
+        //     show.innerHTML= "u are in a right way"         
+        // }
+
+
+        else{
+            show.innerHTML= "try something else"         
+        }
+    }
+
+
+
+
+    // console.log(therndNum)
+
+    function playAgain(){
+ 
+        therndNum = theRndNum();
+        document.getElementById("theNum").innerHTML= "<span>??</span>";
+        document.getElementById("playAgainButton").classList.remove('btn-add');
+        document.getElementById("inputVal").value= "";
+        // document.getElementById("theNum").style.backgroundColor="rgb(198, 252, 145)"
+        document.getElementById("theNum").classList.remove('theNumAdd');
+        
+        show.innerHTML= "Make it happen again :)"
+        inputVal ="";
+        coutn = 0;
+
+    // console.log(therndNum)
+
+    }
+
+    document.getElementById('theNum').addEventListener('click', function(){
+        if(coutn == 1){
+            show.innerHTML= "Tap the play again button ^_^"
+        }
+
+        else{
+            show.innerHTML="Type the Number Here :)";
+            document.getElementById('borderBack').classList.add('JS-opacity');
+            document.getElementById('showTheNum').classList.add('boldADF');
+            
+        }
+    });
+
+    document.getElementById('inputVal').addEventListener('click', function(){
+        document.getElementById('borderBack').classList.remove('JS-opacity');
+        document.getElementById('showTheNum').classList.remove('boldADF');
+        
+
+
+        if( coutn == 1){
+            show.innerHTML= "Tap the play again button ^_^"
+        }
+
+        else{
+            show.innerHTML=showTXT
+        }
+ 
+    });
+
+
+    //config section
+    document.getElementById('btn-config').addEventListener('click', showControlPanel)
+
+    function showControlPanel(){
+        document.getElementById('configNov').classList.add('JS-addHeight')
+    }
+
+    document.getElementById('btn-cancel').addEventListener('click', function(){
+        document.getElementById('configNov').classList.remove('JS-addHeight')
+    })
+
+    document.getElementById('btn-applay').addEventListener('click', letsTestAgain)
+
+    let info = document.getElementById('info');
+
+
+    function letsTestAgain(){
+        if(tempMin == '' && tempMax == ''){
+            info.innerHTML='Both the fields are empty -_-'
+        }
+        
+        else if(tempMax == ''){
+            info.innerHTML='Max Value is empty'
+        }
+        
+        else if(tempMin == ''){
+            info.innerHTML='Min Value is empty'
+        }
+
+        else if(tempMin <= -1 || tempMax <= -1){
+            info.innerHTML='Negative values are not allowed'
+        }
+
+        else if(tempMin == tempMax){
+            info.innerHTML='Why both the Values are equel??'
+        }
+
+        else if(tempMin >= tempMax){
+            info.innerHTML='Min value should smaller then Max value :)'
+        }
+
+        else{
+            max = tempMax;
+            min = tempMin;
+            
+            // console.log(min +" sdf " + max)
+            document.getElementById('configNov').classList.remove('JS-addHeight')
+            info.innerHTML='Good luck :)'
+            therndNum = theRndNum();
+            // console.log(therndNum)
+
+            showTXT= `Type a Number from ${min} to ${max}`;
+
+            show.innerHTML= showTXT;
+        }
+
+    }
+
+</script>
+
+    
+</body>
+</html>
